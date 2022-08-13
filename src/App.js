@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { Link } from 'react-router-dom';
+import Books from './components/Book';
+import AddBook from './components/AddBook';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+const App = () => (
+  <div>
+    <div className="app-header">
+      <h1>BookStore CMS</h1>
+      <nav>
+        <Link to="/">Books</Link>
+        {' '}
+        <Link to="/categories">Categories</Link>
+      </nav>
     </div>
-  );
-}
+    <Books />
+    <h1>ADD NEW BOOK</h1>
+    <AddBook />
+  </div>
+);
 
 export default App;
