@@ -1,1 +1,6 @@
-.eslintrc.json
+{
+  "presets": [
+      "@babel/preset-react"
+  ],
+  "plugins": ["@babel/plugin-syntax-jsx"]
+}
