@@ -1,24 +1,11 @@
-import { configureStore } from 'redux'
-import { Provider } from 'react-redux'
-import rootReducer from './reducers'
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import booksReducer from './books/books';
+import categoriesReducer from './categories/categories';
 
-const store = configureStore(rootReducer)
+const rootReducer = combineReducers({
+  books: booksReducer,
+  categories: categoriesReducer,
+});
+const store = configureStore({ reducer: rootReducer });
 
-export default store
-
-
-// import React from 'react'
-// import { render } from 'react-dom'
-// import { createStore } from 'redux'
-// import { Provider } from 'react-redux'
-// import App from './components/App'
-// import rootReducer from './reducers'
-
-// const store = createStore(rootReducer)
-
-// render(
-//   <Provider store={store}>
-//     <App />
-//   </Provider>,
-//   document.getElementById('root')
-// )
+export default store;
