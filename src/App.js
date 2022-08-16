@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import Books from './components/Book';
-import AddBook from './components/AddBook';
+import ReduxBooks from './components/ReduxBook';
+import ReduxAddBook from './components/ReduxAddBook';
 
 const App = () => (
   <div>
@@ -12,9 +12,13 @@ const App = () => (
         <Link to="/categories">Categories</Link>
       </nav>
     </div>
-    <Books />
-    <h1>ADD NEW BOOK</h1>
-    <AddBook />
+    <div>
+      <ul>
+        <ReduxBooks />
+      </ul>
+      <h1>ADD NEW BOOK</h1>
+      <ReduxAddBook />
+    </div>
   </div>
 );
 
