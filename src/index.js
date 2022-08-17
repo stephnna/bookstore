@@ -9,25 +9,15 @@ import store from './redux/configureStore';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <Routes>
-      <Route
-        path="/"
-        element={(
-          <Provider store={store}>
-            <App />
-          </Provider>
-              )}
-      />
-
-      <Route
-        path="categories"
-        element={(
-          <Provider store={store}>
-            <Categories />
-          </Provider>
-       )}
-      />
-    </Routes>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route
+          path="categories"
+          element={<Categories />}
+        />
+      </Routes>
+    </BrowserRouter>
+  </Provider>,
 );
