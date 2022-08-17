@@ -1,15 +1,18 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addBook } from '../../redux/books/books';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addBook, retrieveBooks } from '../../redux/books/books';
 
 const ReduxAddBookForm = () => {
   const dispatch = useDispatch();
-  const initalState = {
-    title: '',
-    author: '',
-  };
-
+  const book = useSelector(state => state.books);
+  // console.log( book, books);
+  // const initalState = {};
   const [currentState, setState] = useState(initalState);
+  useEffect(() => {
+    dispatch(retrieveBooks());
+  }, []);
+
+  // console.log(currentState, "currstate");
 
   const onChange = (event) => {
     setState({
@@ -22,7 +25,7 @@ const ReduxAddBookForm = () => {
 
     if (currentState.title.trim() && currentState.author.trim()) {
       const { title, author } = currentState;
-      dispatch(addBook(title, author));
+      dispatch();
       setState({
         title: '',
         author: '',
