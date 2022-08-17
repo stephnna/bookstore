@@ -1,18 +1,20 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { addBook, retrieveBooks } from '../../redux/books/books';
+import { useState } from 'react';
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+import { useDispatch } from 'react-redux';
+import { addBook } from '../../redux/books/books';
+import API from '../../api/Api';
 
 const ReduxAddBookForm = () => {
   const dispatch = useDispatch();
-  const book = useSelector(state => state.books);
-  // console.log( book, books);
-  // const initalState = {};
-  const [currentState, setState] = useState(initalState);
-  useEffect(() => {
-    dispatch(retrieveBooks());
-  }, []);
 
-  // console.log(currentState, "currstate");
+  const initialState = {
+    title: '',
+    author: '',
+    category: '',
+  };
+
+  const [currentState, setState] = useState(initialState);
 
   const onChange = (event) => {
     setState({
@@ -20,16 +22,17 @@ const ReduxAddBookForm = () => {
     });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    if (currentState.title.trim() && currentState.author.trim()) {
-      const { title, author } = currentState;
-      dispatch();
-      setState({
-        title: '',
-        author: '',
+  const handleSubmit = async () => {
+    if (currentState.title.trim() && currentState.author.trim() && currentState.category.trim()) {
+      const { title, author, category } = currentState;
+      const newBook = await axios.post(API, {
+        item_id: uuidv4(),
+        title,
+        author,
+        category,
       });
+      dispatch(addBook(newBook));
+      window.location.reload();
     }
   };
 
@@ -48,6 +51,14 @@ const ReduxAddBookForm = () => {
         placeholder="Author"
         name="author"
         value={currentState.author}
+        onChange={onChange}
+        required
+      />
+      <input
+        type="text"
+        placeholder="Category"
+        name="category"
+        value={currentState.category}
         onChange={onChange}
         required
       />

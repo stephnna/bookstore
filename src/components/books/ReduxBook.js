@@ -1,21 +1,34 @@
-import React from 'react';
-import { useSelector,  useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import { useEffect } from 'react';
+import API from '../../api/Api';
 import ReduxAddBookForm from './ReduxAddBookForm';
 import ReduxBookList from './ReduxBookList';
-import { retrieveBooks } from '../../redux/books/books';
-
+import { fetchBooks } from '../../redux/books/books';
 
 const ReduxBooks = () => {
+  const books = useSelector((state) => state.books);
+  console.log(books, 'useSe');
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(retrieveBooks());
+
+  useEffect(() => async () => {
+    const booksObj = await axios.get(API);
+    console.log(booksObj, 'bookObj');
+    if (booksObj.data) {
+      Object.keys(booksObj.data).forEach((itemId) => {
+        const data = booksObj.data[itemId];
+        const book = Object.assign({}, { item_id: itemId }, ...data);
+        books.push(book);
+      });
+      return dispatch(fetchBooks());
+    }
+    return books;
   }, []);
-  const book = useSelector((state) => state.books);
-  console.log(book, 'books');
+
   return (
     <div>
       <ul>
-        {book.map((item) => (
+        {books.map((item) => (
           <ReduxBookList
             key={item.id}
             title={item.title}
