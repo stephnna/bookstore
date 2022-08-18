@@ -31,9 +31,13 @@ const ReduxAddBookForm = () => {
         author,
         category,
       });
+      console.log(newBook, 'post');
       dispatch(addBook(newBook));
-      window.location.reload();
+     
     }
+
+    
+    // window.location.reload();
   };
 
   return (

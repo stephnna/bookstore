@@ -4,6 +4,7 @@ import axios from 'axios';
 import { deleteBook } from '../../redux/books/books';
 
 const ReduxBookList = (props) => {
+  console.log(props, 'props');
   const {
     title, author, id, category,
   } = props;
@@ -14,7 +15,7 @@ const ReduxBookList = (props) => {
       `https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/uFn9a1RzT4ZLk57GWuFK/books/${id}`,
     );
     dispatch(deleteBook(id));
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (
