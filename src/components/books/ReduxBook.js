@@ -1,33 +1,31 @@
 import { useSelector, useDispatch } from 'react-redux';
-// import axios from 'axios';
 import { useEffect } from 'react';
 import ReduxAddBookForm from './ReduxAddBookForm';
 import ReduxBookList from './ReduxBookList';
-import { fetchBooks } from '../../redux/books/books';
+import { BooksFromApi } from '../../redux/books/books';
 
 const ReduxBooks = () => {
-  const  books = useSelector((state) => state.books); 
-  console.log(books, 'books');
-    books.map((item) =>  console.log(item, 'mapi'))
+  const books = useSelector((state) => state.books);
   const dispatch = useDispatch();
 
-  useEffect(()  => { 
-    dispatch(fetchBooks())}, [dispatch]); 
-    
+  useEffect(() => {
+    dispatch(BooksFromApi());
+  },
+  [dispatch]);
 
   return (
     <div>
       <ul>
-        {books.map((book) => {
-          console.log(book.title);
-          <ReduxBookList
-            key={book.item_id}
-            id={book.item_id}
-            title={book.title}
-            author={book.author}           
-            category={book.category}
-          />
-})}
+        {books.map((itemArr) => (
+          itemArr.map((book) => (
+            <ReduxBookList
+              id={book.item_id}
+              title={book.title}
+              author={book.author}
+              category={book.category}
+              key={book.item_id}
+            />
+          ))))}
       </ul>
       <h1>ADD NEW BOOK</h1>
       <ReduxAddBookForm />

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import API from '../../api/Api';
+
 const ADD_BOOK = 'appBook/books/ADD_BOOK';
 const DELETE_BOOK = 'appBook/books/DELETE_BOOK';
 const GET_CURRENT_BOOKS = 'appBook/books/GET_CURRENT_BOOKS';
@@ -13,31 +14,56 @@ const booksReducer = (state = initialBooks, action) => {
       return [...state, action.books];
 
     case ADD_BOOK:
-      return [...state, action.book];
+      return [...state.books, action.book];
+      
+
+      // {books.map((itemArr) => (
+      //   itemArr.map((book) => (
 
     case DELETE_BOOK:
-      return state.filter((book) => book.id !== action.id);
+      return     [...state,
+                state.filter((book) =>  console.log(book.tile))]
+    
+      
+
     default:
       return state;
   }
 };
 
-
-export const fetchBooks = () => async (dispatch) => {
-  dispatch({ type: GET_CURRENT_BOOKS });
-  const booksObj = await axios.get(API);
-  const newBooks = [];
-       if (booksObj.data) {       
-    Object.keys(booksObj.data).forEach((itemKeys) => {     
-     const data = booksObj.data[itemKeys];       
-    const books =  Object.assign({}, ...data, { item_id: itemKeys });    
-    newBooks.push(books);     
-    });    
-    dispatch(fetchBook(newBooks));
-  }  
+export const postBooks = (book) => async (dispatch) => {
+  book = await axios.post(API);
+  // fetch(URL, {
+  //   method: 'POST',
+  //   headers: {
+  //     'content-type': 'applicaion/json',
+  //   },
+  //   body: JSON.stringify((book)),
+  // }).then(() => {
+    dispatch(addBook(book));
+  // });
 };
 
 
+export const BooksFromApi = () => async (dispatch) => {
+  dispatch({ type: GET_CURRENT_BOOKS });
+  const booksObj = await axios.get(API);
+  const newBooks = [];
+  if (booksObj.data) {
+    Object.keys(booksObj.data).forEach((itemKeys) => {
+      const data = booksObj.data[itemKeys];
+      const books = Object.assign({}, ...data, { item_id: itemKeys });      
+      newBooks.push(books);
+    });
+    dispatch(fetchBook(newBooks));
+  }
+};
+
+export const deleteFromApi = (id) => async (dispatch) => {
+  // JSON.stringify({ item_id: id })
+  await axios.delete(`${API}/${id}`);
+  dispatch(deleteBook(id));
+};
 
 export const addBook = (book) => ({
   type: ADD_BOOK,
@@ -53,6 +79,5 @@ export const fetchBook = (books) => ({
   type: GET_CURRENT_BOOKS_SUCCESS,
   books,
 });
-
 
 export default booksReducer;
