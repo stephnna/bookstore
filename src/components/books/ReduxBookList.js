@@ -1,13 +1,11 @@
 import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import axios from 'axios';
 import { deleteBook } from '../../redux/books/books';
 
-const ReduxBookList = (props) => {
-  console.log(props, 'props');
-  const {
-    title, author, id, category,
-  } = props;
+const ReduxBookList = (props) => {  
+  const {id, title, author, category } = props;
+  console.log(props,  'props');
   const dispatch = useDispatch();
 
   const handleRemove = async () => {
@@ -31,11 +29,11 @@ const ReduxBookList = (props) => {
   );
 };
 
-ReduxBookList.propTypes = {
-  id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-};
+// ReduxBookList.propTypes = {
+//   id: PropTypes.string.isRequired,
+//   title: PropTypes.string.isRequired,
+//   author: PropTypes.string.isRequired,
+//   category: PropTypes.string.isRequired,
+// };
 
 export default ReduxBookList;
