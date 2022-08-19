@@ -1,21 +1,137 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+:root {
+  --Dark-Blue: hsl(210, 100%, 50%);
+  --Blue: rgba(46, 46, 248, 0.754);
+  --Dark-Gray: rgb(72, 72, 72);
+  --Very-Light-Gray: hsl(0, 0%, 98%);
+  --White: hsl(0, 0%, 100%);
 }
 
-body {
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: #fff;
+.dark-blue-color {
+  color: var(--Dark-Blue);
+}
+
+.grey-color {
+  color: var(--Dark-Gray);
+}
+
+.blue-color {
+  color: var(--Blue);
+}
+
+.white-color {
+  color: var(--White);
+}
+
+* {
+  background-color: var(--White);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s linear;
+  font-family: 'Nunito Sans', sans-serif;
 }
 
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 100px 24px;
+  margin: 24px 100px 0 100px;
 }
 
-li {
-  margin-bottom: 50px;
+.app-padding {
+  padding-bottom: 300px;
+}
+
+.redux-book-list-title {
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.redux-book-list-li {
+  display: grid;
+  grid-template-columns: auto;
+  margin: 50px 100px;
+  border: 1px solid var(--Dark-Gray);
+}
+
+.redux-book-list-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 28px 16px;
+}
+
+.redux-book-list-button {
+  margin-right: 24px;
+}
+
+.redux-book-list-edit,
+.redux-book-list-button {
+  border: none;
+}
+
+.redux-book-list-category {
+  font-weight: 400;
+}
+
+.redux-add-book-div {
+  text-align: center;
+  align-items: center;
+}
+
+.redux-book-list-h2 {
+  margin-bottom: 24px;
+}
+
+.redux-book-list-circle {
+  border: 2px solid var(--Dark-Blue);
+  height: 72px;
+  width: 72px;
+  display: inline-block;
+  background-color: var(--White);
+  border-radius: 50%;
+  border-bottom-color: var(--Blue);
+  border-top-color: #aeadad;
+  margin-right: 16px;
+}
+
+.redux-book-btn {
+  padding: 16px 32px;
+  border: none;
+  background-color: var(--Blue);
+}
+
+.redux-book-list-curr {
+  color: #aeadad;
+}
+
+.redux-book-list-middle {
+  display: flex;
+  align-items: center;
+}
+
+.redux-book-list-percent {
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.redux-add-form-input {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-right: 150px;
+}
+
+.redux-add-form-margin {
+  margin-right: 32px;
+}
+
+.redux-add-form-btn-margin {
+  margin-top: 48px;
+}
+
+.hr {
+  margin: 0 100px;
 }
