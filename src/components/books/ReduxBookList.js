@@ -8,10 +8,7 @@ const ReduxBookList = (props) => {
     id, title, author, category,
   } = props;
   const dispatch = useDispatch();
-  console.log(id, 'id props');
-
   const handleRemove = () => dispatch(deleteBookFromApi(id));
-  // window.location.reload();
 
   return (
     <li>

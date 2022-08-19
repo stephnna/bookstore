@@ -5,7 +5,7 @@ const ADD_BOOK = 'appBook/books/ADD_BOOK';
 const DELETE_BOOK = 'appBook/books/DELETE_BOOK';
 const GET_CURRENT_BOOKS = 'appBook/books/GET_CURRENT_BOOKS';
 const GET_CURRENT_BOOKS_SUCCESS = 'appBook/books/GET_CURRENT_BOOKS_SUCCESS';
-const GET_CURRENT_BOOKS_FAILURE = 'appBook/books/GET_CURRENT_BOOKS_FAILURE';
+// const GET_CURRENT_BOOKS_FAILURE = 'appBook/books/GET_CURRENT_BOOKS_FAILURE';
 
 const initialBooks = [];
 const booksReducer = (state = initialBooks, action) => {
@@ -14,42 +14,14 @@ const booksReducer = (state = initialBooks, action) => {
       return [...state, action.books];
 
     case ADD_BOOK:
-      return [...state.books, action.book];    
+      return [...state, action.book];
 
     case DELETE_BOOK:
       return [...state,
-        state.filter((book) => book.filter((item) => item.item_id !== action.id))];
+        state.filter((item) => item.item_id !== action.id)];
     default:
       return state;
   }
-};
-
-export const postBooks = (book) => async (dispatch) => {
- let res = await axios.post(API, book); 
-  let data = res.data;
-  console.log(data, 'post action');  
-  dispatch(addBook(book)); 
-};
-
-export const GetBooksFromApi = () => async (dispatch) => {
-  dispatch({ type: GET_CURRENT_BOOKS });
-  const booksObj = await axios.get(API);
-  const newBooks = [];
-  if (booksObj.data) {
-    Object.keys(booksObj.data).forEach((itemKeys) => {
-      const data = booksObj.data[itemKeys];
-      const books = Object.assign({}, ...data, { item_id: itemKeys });
-      newBooks.push(books);
-    });
-    dispatch(fetchBook(newBooks));
-  }
-};
-
-
-export const deleteBookFromApi = (id) => async (dispatch) => {
- let res = await axios.delete(`${API}/${id}`, {item_id: id});
-  dispatch(deleteBook(id));
-  window.location.reload();
 };
 
 export const addBook = (book) => ({
@@ -66,5 +38,31 @@ export const fetchBook = (books) => ({
   type: GET_CURRENT_BOOKS_SUCCESS,
   books,
 });
+
+export const postBooks = (book) => async (dispatch) => {
+  await axios.post(API, book);
+  dispatch(addBook(book));
+  window.location.reload();
+};
+
+export const GetBooksFromApi = () => async (dispatch) => {
+  dispatch({ type: GET_CURRENT_BOOKS });
+  const booksObj = await axios.get(API);
+  const newBooks = [];
+  if (booksObj.data) {
+    Object.keys(booksObj.data).forEach((itemKeys) => {
+      const data = booksObj.data[itemKeys];
+      const books = Object.assign({}, ...data, { item_id: itemKeys });
+      newBooks.push(books);
+    });
+    dispatch(fetchBook(newBooks));
+  }
+};
+
+export const deleteBookFromApi = (id) => async (dispatch) => {
+  await axios.delete(`${API}/${id}`, { item_id: id });
+  dispatch(deleteBook(id));
+  window.location.reload();
+};
 
 export default booksReducer;
