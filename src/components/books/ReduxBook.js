@@ -2,14 +2,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import ReduxAddBookForm from './ReduxAddBookForm';
 import ReduxBookList from './ReduxBookList';
-import { BooksFromApi } from '../../redux/books/books';
+import { GetBooksFromApi } from '../../redux/books/books';
 
 const ReduxBooks = () => {
   const books = useSelector((state) => state.books);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(BooksFromApi());
+    dispatch(GetBooksFromApi());
   },
   [dispatch]);
 

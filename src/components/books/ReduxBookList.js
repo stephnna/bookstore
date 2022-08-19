@@ -1,15 +1,16 @@
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 // import axios from 'axios';
-import { deleteBook } from '../../redux/books/books';
+import { deleteBookFromApi } from '../../redux/books/books';
 
 const ReduxBookList = (props) => {
   const {
     id, title, author, category,
   } = props;
   const dispatch = useDispatch();
+  console.log(id, 'id props');
 
-  const handleRemove =  () => dispatch(deleteBook(id));
+  const handleRemove = () => dispatch(deleteBookFromApi(id));
   // window.location.reload();
 
   return (
