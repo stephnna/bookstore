@@ -27,7 +27,6 @@ const ReduxBooks = () => {
             />
           ))))}
       </ul>
-      <h1>ADD NEW BOOK</h1>
       <ReduxAddBookForm />
     </div>
   );

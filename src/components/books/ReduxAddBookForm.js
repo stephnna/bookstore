@@ -40,9 +40,11 @@ const ReduxAddBookForm = () => {
   };
 
   return (
-    <div>
-      <form className="form" onSubmit={handleSubmit}>
+    <div className="redux-add-book-div">
+      <h2 className="redux-book-list-h2 grey-color">ADD NEW BOOK</h2>
+      <form onSubmit={handleSubmit}>
         <input
+          className="redux-add-form-input redux-add-form-margin"
           type="text"
           placeholder="Book title"
           name="title"
@@ -51,6 +53,7 @@ const ReduxAddBookForm = () => {
           required
         />
         <input
+          className="redux-add-form-input redux-add-form-margin"
           type="text"
           placeholder="Author"
           name="author"
@@ -59,6 +62,7 @@ const ReduxAddBookForm = () => {
           required
         />
         <input
+          className="redux-add-form-input"
           type="text"
           placeholder="Category"
           name="category"
@@ -66,12 +70,19 @@ const ReduxAddBookForm = () => {
           onChange={onChange}
           required
         />
-        <button
-          onClick={handleSubmit}
-          type="submit"
-        >
-          Add new book
-        </button>
+        <br />
+        <br />
+        <br />
+        <hr className="hr" />
+        <div className="redux-add-form-btn-margin">
+          <button
+            className="redux-book-btn white-color"
+            onClick={handleSubmit}
+            type="submit"
+          >
+            Add new book
+          </button>
+        </div>
       </form>
     </div>
   );
