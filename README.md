@@ -21,7 +21,7 @@ React and Redux
 ![screenshot]()
 
 ## Live Demo
-[Live demo here]()
+[Live demo here](https://stephen-bookstore.netlify.app/)
 
 ## Getting started
 To get a local copy up and running follow these simple example steps:
