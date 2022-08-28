@@ -34,11 +34,23 @@
   font-family: 'Nunito Sans', sans-serif;
 }
 
-.app-header {
-  display: flex;
+.nav-header {
   justify-content: space-between;
   align-items: center;
   margin: 24px 100px 0 100px;
+}
+
+.nav-header,
+.nav-left {
+  display: flex;
+}
+
+.nav-left li {
+  list-style-type: none;
+}
+
+.nav-left .first-li {
+  margin-right: 16px;
 }
 
 .app-padding {
@@ -80,6 +92,13 @@
 .redux-add-book-div {
   text-align: center;
   align-items: center;
+}
+
+.redux-book-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .redux-book-list-h2 {

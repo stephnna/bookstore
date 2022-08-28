@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-// import axios from 'axios';
 import { deleteBookFromApi } from '../../redux/books/books';
 
 const ReduxBookList = (props) => {

@@ -3,22 +3,59 @@ import API from '../../api/Api';
 
 const ADD_BOOK = 'appBook/books/ADD_BOOK';
 const DELETE_BOOK = 'appBook/books/DELETE_BOOK';
-const GET_CURRENT_BOOKS = 'appBook/books/GET_CURRENT_BOOKS';
-const GET_CURRENT_BOOKS_SUCCESS = 'appBook/books/GET_CURRENT_BOOKS_SUCCESS';
-// const GET_CURRENT_BOOKS_FAILURE = 'appBook/books/GET_CURRENT_BOOKS_FAILURE';
+const FETCH_BOOKS_BEGINS = 'appBook/books/FETCH_BOOKS_BEGINS';
+const FETCH_BOOKS_SUCCESS = 'appBook/books/FETCH_BOOKS_SUCCESS';
+const FETCH_BOOKS_FAILURE = 'appBook/books/FETCH_BOOKS_FAILURE';
 
-const initialBooks = [];
+const initialBooks = {
+  books: [],
+  loading: false,
+  error: null,
+};
+
 const booksReducer = (state = initialBooks, action) => {
   switch (action.type) {
-    case GET_CURRENT_BOOKS_SUCCESS:
-      return [...state, action.books];
+    case FETCH_BOOKS_BEGINS: // Mark the state as "loading" so we can show a spinner
+
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case FETCH_BOOKS_SUCCESS:
+      // All done: set loading "false".
+      // Also, replace the items with the ones from the server
+      return {
+        ...state,
+        loading: false,
+        books: action.books,
+      };
+
+    case FETCH_BOOKS_FAILURE:
+      // The request failed. It's done. So set loading to "false".
+      // Save the error, so we can display it somewhere.
+      // Since it failed, we don't have items to display anymore, so set `items` empty.
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+        books: [],
+      };
 
     case ADD_BOOK:
-      return [...state, action.book];
+      return {
+        ...state,
+        loading: true,
+        error: action.error,
+        books: action.book,
+      };
 
     case DELETE_BOOK:
-      return [...state,
-        state.filter((item) => item.item_id !== action.id)];
+      return {
+        ...state,        
+        // error: action.error,
+        books: state.books.filter((item) => item.item_id !== action.id),
+      };
     default:
       return state;
   }
@@ -34,35 +71,58 @@ export const deleteBook = (id) => ({
   id,
 });
 
+export const loadingBooks = () => ({
+  type: FETCH_BOOKS_BEGINS,
+});
+
 export const fetchBook = (books) => ({
-  type: GET_CURRENT_BOOKS_SUCCESS,
+  type: FETCH_BOOKS_SUCCESS,
   books,
 });
 
+export const fetchBooksFailure = (error) => ({
+  type: FETCH_BOOKS_FAILURE,
+  error,
+});
+
 export const postBooks = (book) => async (dispatch) => {
-  await axios.post(API, book);
-  dispatch(addBook(book));
-  window.location.reload();
+  dispatch(loadingBooks());
+  try {
+    await axios.post(API, book);
+    dispatch(addBook(book));
+    window.location.reload();
+  } catch (error) {
+    dispatch(fetchBooksFailure(error));
+  }
 };
 
 export const GetBooksFromApi = () => async (dispatch) => {
-  dispatch({ type: GET_CURRENT_BOOKS });
-  const booksObj = await axios.get(API);
-  const newBooks = [];
-  if (booksObj.data) {
-    Object.keys(booksObj.data).forEach((itemKeys) => {
-      const data = booksObj.data[itemKeys];
-      const books = Object.assign({}, ...data, { item_id: itemKeys });
-      newBooks.push(books);
-    });
-    dispatch(fetchBook(newBooks));
+  dispatch(loadingBooks());
+  try {
+    const booksObj = await axios.get(API);
+    const newBooks = [];
+    if (booksObj.data) {
+      Object.keys(booksObj.data).forEach((itemKeys) => {
+        const data = booksObj.data[itemKeys];
+        const books = Object.assign({}, ...data, { item_id: itemKeys });
+        newBooks.push(books);
+      });
+      dispatch(fetchBook(newBooks));
+    }
+  } catch (error) {
+    dispatch(fetchBooksFailure(error));
   }
 };
 
 export const deleteBookFromApi = (id) => async (dispatch) => {
-  await axios.delete(`${API}/${id}`, { item_id: id });
-  dispatch(deleteBook(id));
-  window.location.reload();
+  dispatch(loadingBooks());
+  try {
+    await axios.delete(`${API}/${id}`, { item_id: id });
+    dispatch(deleteBook(id));
+    window.location.reload();
+  } catch (error) {
+    // dispatch(fetchBooksFailure(error));
+  }
 };
 
 export default booksReducer;
