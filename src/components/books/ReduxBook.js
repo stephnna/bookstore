@@ -5,7 +5,7 @@ import ReduxBookList from './ReduxBookList';
 import { GetBooksFromApi } from '../../redux/books/books';
 
 const ReduxBooks = () => {
-  const books = useSelector((state) => state.books);
+  const { loading, books, error } = useSelector((state) => state.books);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -13,11 +13,24 @@ const ReduxBooks = () => {
   },
   [dispatch]);
 
-  return (
-    <div>
-      <ul>
-        {books.map((itemArr) => (
-          itemArr.map((book) => (
+  const displayBooks = () => {
+    if (error) {
+      return (
+        <div className="redux-book-loading">
+          <span>
+            Oops!
+            {' '}
+            {error.message}
+            !
+          </span>
+        </div>
+      );
+    }
+    if (loading) return <div className="redux-book-loading"><span>Loading...</span></div>;
+    return (
+      <div>
+        <ul>
+          {books.map((book) => (
             <ReduxBookList
               id={book.item_id}
               title={book.title}
@@ -25,11 +38,13 @@ const ReduxBooks = () => {
               category={book.category}
               key={book.item_id}
             />
-          ))))}
-      </ul>
-      <ReduxAddBookForm />
-    </div>
-  );
+          ))}
+        </ul>
+        <ReduxAddBookForm />
+      </div>
+    );
+  };
+  return <>{displayBooks()}</>;
 };
 
 export default ReduxBooks;

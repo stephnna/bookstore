@@ -31,11 +31,6 @@ const ReduxAddBookForm = () => {
         category,
       };
       dispatch(postBooks(newBook));
-      setState({
-        title: '',
-        author: '',
-        category: '',
-      });
     }
   };
 
