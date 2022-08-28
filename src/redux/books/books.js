@@ -53,7 +53,6 @@ const booksReducer = (state = initialBooks, action) => {
     case DELETE_BOOK:
       return {
         ...state,        
-        // error: action.error,
         books: state.books.filter((item) => item.item_id !== action.id),
       };
     default:
