@@ -52,7 +52,7 @@ const booksReducer = (state = initialBooks, action) => {
 
     case DELETE_BOOK:
       return {
-        ...state,        
+        ...state,
         books: state.books.filter((item) => item.item_id !== action.id),
       };
     default:
@@ -114,13 +114,12 @@ export const GetBooksFromApi = () => async (dispatch) => {
 };
 
 export const deleteBookFromApi = (id) => async (dispatch) => {
-  dispatch(loadingBooks());
   try {
     await axios.delete(`${API}/${id}`, { item_id: id });
     dispatch(deleteBook(id));
     window.location.reload();
   } catch (error) {
-    // dispatch(fetchBooksFailure(error));
+    dispatch(fetchBooksFailure(error));
   }
 };
 

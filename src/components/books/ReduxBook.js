@@ -19,6 +19,7 @@ const ReduxBooks = () => {
         <div className="redux-book-loading">
           <span>
             Oops!
+            {' '}
             {error.message}
             !
           </span>
